@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User Registration</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+
+<body>
+    <form id="userForm">
+        <label for="firstName">First Name:</label>
+        <input type="text" id="firstName" name="firstName" required><br><br>
+        <label for="lastName">Last Name:</label>
+        <input type="text" id="lastName" name="lastName" required><br><br>
+        <label for="mobile">Mobile:</label>
+        <input type="text" id="mobile" name="mobile" required><br><br>
+        <label for="email">Email:</label>
+        <input type="email" id="email" name="email" required><br><br>
+        <label for="street">Street:</label>
+        <input type="text" id="street" name="street"><br><br>
+        <label for="city">City:</label>
+        <input type="text" id="city" name="city"><br><br>
+        <label for="state">State:</label>
+        <input type="text" id="state" name="state"><br><br>
+        <label for="country">Country:</label>
+        <input type="text" id="country" name="country"><br><br>
+        <label for="loginId">Login ID:</label>
+        <input type="text" id="loginId" name="loginId" required><br><br>
+        <label for="password">Password:</label>
+        <input type="password" id="password" name="password" required><br><br>
+        <button type="submit">Save</button>
+    </form>
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            $('#userForm').on('submit', function (event) {
+                event.preventDefault();
+
+                const userData = {
+                    firstName: $('#firstName').val(),
+                    lastName: $('#lastName').val(),
+                    mobile: $('#mobile').val(),
+                    email: $('#email').val(),
+                    address: {
+                        street: $('#street').val(),
+                        city: $('#city').val(),
+                        state: $('#state').val(),
+                        country: $('#country').val()
+                    },
+                    loginId: $('#loginId').val(),
+                    password: $('#password').val()
+                };
+
+                $.ajax({
+                    url: 'http://localhost:3000/api/users',
+                    type: 'POST',
+                    contentType: 'application/json',
+                    data: JSON.stringify(userData),
+                    success: function (response) {
+                        alert('User data saved successfully!');
+                    },
+                    error: function (error) {
+                        alert('Error saving user data');
+                        console.error(error);
+                    }
+                });
+            });
+        });
+    </script>
+</body>
+
+</html>
