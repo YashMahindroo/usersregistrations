@@ -10,26 +10,53 @@
 
 <body>
     <form id="userForm">
-        <label for="firstName">First Name:</label>
-        <input type="text" id="firstName" name="firstName" required><br><br>
-        <label for="lastName">Last Name:</label>
-        <input type="text" id="lastName" name="lastName" required><br><br>
-        <label for="mobile">Mobile:</label>
-        <input type="text" id="mobile" name="mobile" required><br><br>
-        <label for="email">Email:</label>
-        <input type="email" id="email" name="email" required><br><br>
-        <label for="street">Street:</label>
-        <input type="text" id="street" name="street"><br><br>
-        <label for="city">City:</label>
-        <input type="text" id="city" name="city"><br><br>
-        <label for="state">State:</label>
-        <input type="text" id="state" name="state"><br><br>
-        <label for="country">Country:</label>
-        <input type="text" id="country" name="country"><br><br>
-        <label for="loginId">Login ID:</label>
-        <input type="text" id="loginId" name="loginId" required><br><br>
-        <label for="password">Password:</label>
-        <input type="password" id="password" name="password" required><br><br>
+        <h1>User Data Form</h1>
+        <div>
+            <label for="firstName">First Name:</label>
+            <input type="text" id="firstName" name="firstName" required>
+            <span class="error" id="errorFirstName"></span>
+        </div>
+        <div>
+            <label for="lastName">Last Name:</label>
+            <input type="text" id="lastName" name="lastName" required>
+            <span class="error" id="errorLastName"></span>
+        </div>
+        <div>
+            <label for="mobile">Mobile:</label>
+            <input type="text" id="mobile" name="mobile" required>
+            <span class="error" id="errorMobile"></span>
+        </div>
+        <div>
+            <label for="email">Email:</label>
+            <input type="email" id="email" name="email" required>
+            <span class="error" id="errorEmail"></span>
+        </div>
+        <div>
+            <label for="street">Street:</label>
+            <input type="text" id="street" name="street">
+        </div>
+        <div>
+            <label for="city">City:</label>
+            <input type="text" id="city" name="city">
+        </div>
+        <div>
+            <label for="state">State:</label>
+            <input type="text" id="state" name="state">
+        </div>
+        <div>
+            <label for="country">Country:</label>
+            <input type="text" id="country" name="country">
+        </div>
+        <div>
+            <label for="loginId">Login ID:</label>
+            <input type="text" id="loginId" name="loginId" required>
+            <span class="error" id="errorLoginId"></span>
+        </div>
+        <div>
+            <label for="password">Password:</label>
+            <input type="password" id="password" name="password" required>
+            <span class="error" id="errorPassword"></span>
+        </div>
         <button type="submit">Save</button>
     </form>
 
@@ -63,8 +90,11 @@
                         alert('User data saved successfully!');
                     },
                     error: function (error) {
-                        alert('Error saving user data');
-                        console.error(error);
+                        const errors = error.responseJSON.errors;
+                        $('.error').text(''); // Clear previous error messages
+                        errors.forEach(err => {
+                            $(`#error${err.param.charAt(0).toUpperCase() + err.param.slice(1)}`).text(err.msg);
+                        });
                     }
                 });
             });
